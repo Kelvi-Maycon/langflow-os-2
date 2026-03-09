@@ -40,7 +40,9 @@ const server = http.createServer(async (req, res) => {
   const requestedPath = urlPath === '/' ? '/index.html' : urlPath;
   const filePath = path.normalize(path.join(distDir, requestedPath));
 
-  if (!filePath.startsWith(distDir)) {
+  // Ensure the resolved path is strictly inside the dist directory
+  const safeDistDir = distDir.endsWith(path.sep) ? distDir : distDir + path.sep;
+  if (!filePath.startsWith(safeDistDir) && filePath !== distDir) {
     sendNotFound(res);
     return;
   }
