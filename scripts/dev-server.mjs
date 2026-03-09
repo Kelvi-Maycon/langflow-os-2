@@ -39,8 +39,9 @@ const server = http.createServer(async (req, res) => {
   const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
   const requestedPath = urlPath === '/' ? '/index.html' : urlPath;
   const filePath = path.normalize(path.join(distDir, requestedPath));
+  const relativePath = path.relative(distDir, filePath);
 
-  if (!filePath.startsWith(distDir)) {
+  if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
     sendNotFound(res);
     return;
   }
