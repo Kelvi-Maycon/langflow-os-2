@@ -18,16 +18,16 @@ import AppLayout from './components/shared/AppLayout.jsx';
 import { useWordStore } from './store/useWordStore.js';
 import { useProgressStore } from './store/useProgressStore.js';
 
-function DashboardRoute() {
+export function DashboardRoute() {
   return <Dashboard />;
 }
 
-function ReaderRoute() {
+export function ReaderRoute() {
   const navigate = useNavigate();
   return <Reader onPractice={(selectedWords) => navigate('/practice', { state: { words: selectedWords } })} />;
 }
 
-function PracticeRoute() {
+export function PracticeRoute() {
   const location = useLocation();
   const navigate = useNavigate();
   const initialWords = location.state?.words || [];
